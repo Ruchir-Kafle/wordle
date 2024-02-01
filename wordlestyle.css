@@ -1,0 +1,17 @@
+html {
+    background-color: rgb(18, 18, 19);
+    color: white;
+}
+
+h1 {
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+li {
+    font-size: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    display: inline-block;
+    list-style-type: none;
+}
