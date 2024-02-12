@@ -27,12 +27,12 @@ function render() {
     let template = ``;
     
     for (let i = 0; i < keyboard.length; i++) {
-        console.log(i, keyboard[i])
-    }
+        console.log(i, keyboard[i]);
+    };
 
     main.innerHTML = template;
 
-    console.log(main)
+    console.log(main);
 }
 // Code
 
