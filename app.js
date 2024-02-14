@@ -24,17 +24,26 @@ function logKey(evt) {
 function render() {
     // Searches the HTML document for an HTML tag with the "root" id.
     const main = document.querySelector("#root"); 
-    let template = ``;
+    let template = `<div class="keyboard">`;
     
     for (let i = 0; i < keyboard.length; i++) {
-        console.log(i, keyboard[i]);
+        template += `<div class = "row">`;
+        for (let j = 0; j < keyboard[i].length; j++) {
+            template += `<div class="key">${keyboard[i][j]}</div>`;
+            console.log(j)
+        }
+        template += `</div>`
     };
+
+    template += `</div>`
 
     main.innerHTML = template;
 
     console.log(main);
 }
 // Code
+
+render();
 
 // Events
 window.addEventListener("keyup", logKey); // Calling the function "logKey" whenever a key is released.
