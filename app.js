@@ -7,6 +7,8 @@ const keyboard = [
     "ASDFGHJKL".split(""),
     "ZXCVBNM".split("")
 ]; // Defining the letters of the keyboard in three elements, each element representing a row on the keyboard and each element being an array.
+keyboard[2].unshift("ENTER");
+keyboard[2].push("BACK")
 
 // Functions
 function logKey(evt) {
