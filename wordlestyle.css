@@ -55,4 +55,17 @@ header h1 {
     border: rgb(58,58,60) solid 1px;
     width: 52px;
     height: 52px;
+    text-align: center;
+    font-family: "Libre Franklin", sans-serif;
+    line-height: 52px;
+    font-weight: bold;
+    font-size: 1.25em;
+}
+
+.match2 {
+    background-color: green;
+}
+
+.match1 {
+    background-color: orange;
 }
