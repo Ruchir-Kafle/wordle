@@ -69,3 +69,7 @@ header h1 {
 .match1 {
     background-color: orange;
 }
+
+.match0 {
+    background-color: rgb(129,131,132);
+}

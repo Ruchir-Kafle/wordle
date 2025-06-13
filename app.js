@@ -119,7 +119,7 @@ function render() {
 
 // Code
 
-render([0,0,0,0,0]);
+render();
 
 // Events
 window.addEventListener("keyup", logKey); // Calling the function "logKey" whenever a key is released.
