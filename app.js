@@ -26,45 +26,51 @@ let correctionMap = [
     [],
     [],
 ];
+let attempt = 0;
+let won = false;
+let lost = false;
 
 // Functions
-function logKey(evt, attempt) {
-    console.log(evt)
-    if (evt.key.toLowerCase() == "enter") { // Triggers when the enter key is pressed
-        console.log("Submit"); // Prints "Submit" in the console
+function logKey(evt) {
+    if (!won && !lost) {
+        if (attempt >= 6) {
+            lost = true;
+            return;
+        }
+
+        if (evt.key.toLowerCase() == "enter") { // Triggers when the enter key is pressed
+            console.log("Submit"); // Prints "Submit" in the console
+            
+            if (tries[attempt].length == 5) {
+                evaluate(tries[attempt]);
+                attempt++;
+            }    
+        } 
         
-        if (attempt < 6 && tries[attempt].length == 5) {
-            evaluate(tries[attempt], attempt);
-            attempt++;
-            return attempt, won
-        };
-
-    } 
-    
-    else if (evt.key.toLowerCase() == "backspace") { // Triggers when the backspace key is pressed
-        console.log("Deleting"); // Prints "Deleting" in the console.
-        tries[attempt].pop();
-    } 
-    
-    else if (alpha.has(evt.key.toLowerCase())) { // Triggers when a key is pressed which is in the "alpha" set.
+        else if (evt.key.toLowerCase() == "backspace") { // Triggers when the backspace key is pressed
+            console.log("Deleting"); // Prints "Deleting" in the console.
+            tries[attempt].pop();
+        } 
         
-        if (tries[attempt].length < 5) {
-            tries[attempt].push(evt.key.toUpperCase());
+        else if (alpha.has(evt.key.toLowerCase())) { // Triggers when a key is pressed which is in the "alpha" set.
+            
+            if (tries[attempt].length < 5) {
+                tries[attempt].push(evt.key.toUpperCase());
+            };
+    
+        } 
+        
+        else { // Triggers when a non-letter key is pressed.
+            console.log("Key pressed is not a letter"); // Prints "Key pressed is not a letter" in the console.
         };
-
-    } 
+        
     
-    else { // Triggers when a non-letter key is pressed.
-        console.log("Key pressed is not a letter"); // Prints "Key pressed is not a letter" in the console.
-    };
-    
-
-    render();
-    return attempt
+        render();
+    }
 };
 
 
-function evaluate(guess, attempt) {
+function evaluate(guess) {
     let matches = [];
 
     for (let i = 0; i < guess.length; i++) {
@@ -80,13 +86,12 @@ function evaluate(guess, attempt) {
 
         matches.push(found);
     };
-    
-    if (tries[attempt] == secret) {
+
+    if (guess.join("") == secret) {
         won = true
     }
 
     correctionMap[attempt] = matches
-    return won
 };
 
 
@@ -123,19 +128,9 @@ function render() {
 };
 
 
-function main(evt) {
-    let attempt = 0;
-    let won = false
-
-
-    if (!won) {
-        attempt, won = logKey(evt, attempt);
-    }
-};
-
 // Code
 
 render();
 
 // Events
-window.addEventListener("keyup", main); // Calling the function "logKey" whenever a key is released.
+window.addEventListener("keyup", logKey); // Calling the function "logKey" whenever a key is released.
