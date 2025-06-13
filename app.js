@@ -25,19 +25,18 @@ let correctionMap = [
     [],
     [],
     [],
-]
-let attempt = 0;
+];
 
 // Functions
-function logKey(evt) {
+function logKey(evt, attempt) {
     console.log(evt)
-
     if (evt.key.toLowerCase() == "enter") { // Triggers when the enter key is pressed
         console.log("Submit"); // Prints "Submit" in the console
         
         if (attempt < 6 && tries[attempt].length == 5) {
-            evaluate(tries[attempt]);
+            evaluate(tries[attempt], attempt);
             attempt++;
+            return attempt, won
         };
 
     } 
@@ -61,10 +60,11 @@ function logKey(evt) {
     
 
     render();
+    return attempt
 };
 
 
-function evaluate(guess) {
+function evaluate(guess, attempt) {
     let matches = [];
 
     for (let i = 0; i < guess.length; i++) {
@@ -81,7 +81,12 @@ function evaluate(guess) {
         matches.push(found);
     };
     
+    if (tries[attempt] == secret) {
+        won = true
+    }
+
     correctionMap[attempt] = matches
+    return won
 };
 
 
@@ -117,9 +122,20 @@ function render() {
     main.innerHTML = board + keyTemplate;
 };
 
+
+function main(evt) {
+    let attempt = 0;
+    let won = false
+
+
+    if (!won) {
+        attempt, won = logKey(evt, attempt);
+    }
+};
+
 // Code
 
-render([0,0,0,0,0]);
+render();
 
 // Events
-window.addEventListener("keyup", logKey); // Calling the function "logKey" whenever a key is released.
+window.addEventListener("keyup", main); // Calling the function "logKey" whenever a key is released.
