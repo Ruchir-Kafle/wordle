@@ -18,18 +18,25 @@ let tries = [
     [],
     [],
 ];
+let correctionMap = [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+]
 let attempt = 0;
 
 // Functions
 function logKey(evt) {
     console.log(evt)
-    let matches = [0,0,0,0,0];
 
     if (evt.key.toLowerCase() == "enter") { // Triggers when the enter key is pressed
         console.log("Submit"); // Prints "Submit" in the console
         
         if (attempt < 6 && tries[attempt].length == 5) {
-            matches = evaluate(tries[attempt]);
+            evaluate(tries[attempt]);
             attempt++;
         };
 
@@ -53,10 +60,32 @@ function logKey(evt) {
     };
     
 
-    render(matches);
+    render();
 };
 
-function render(matches) {
+
+function evaluate(guess) {
+    let matches = [];
+
+    for (let i = 0; i < guess.length; i++) {
+        let found = 0;
+
+        if (guess[i] == secret[i]) {
+            found = 2;
+        }
+        
+        else if (secret.includes(guess[i])) {
+            found = 1;
+        }
+
+        matches.push(found);
+    };
+    
+    correctionMap[attempt] = matches
+};
+
+
+function render() {
     // Searches the HTML document for an HTML tag with the "root" id.
     const main = document.querySelector("#root");
     let board = `<div class="board">`;
@@ -64,7 +93,7 @@ function render(matches) {
     for (let i = 0; i < tries.length; i++) {
 
         for (let j = 0; j < 5; j++) {
-            board += `<div class="match${matches[j]}">${tries[i][j] ? tries[i][j] : ""}</div>`;
+            board += `<div class="match${correctionMap[i][j]}">${tries[i][j] ? tries[i][j] : ""}</div>`;
         };
 
     };
@@ -88,24 +117,6 @@ function render(matches) {
     main.innerHTML = board + keyTemplate;
 };
 
-function evaluate(guess) {
-    let matches = [];
-
-    for (let i = 0; i < guess.length; i++) {
-        let found = 0;
-
-        if (guess[i] == secret[i]) {
-            found = 2;
-        } 
-        
-        else if (secret.includes(guess[i])) {
-            found = 1;
-        }
-
-        matches.push(found);
-    };
-    return matches;
-};
 // Code
 
 render([0,0,0,0,0]);
